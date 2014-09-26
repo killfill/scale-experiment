@@ -1,22 +1,69 @@
+# Auto Scaler
 
+This is a experiment to build a [Cloud Foundry](http://cloudfoundry.org/) [Service](http://docs.cloudfoundry.org/services/overview.html) that monitor apps, and scale them up or down depending on their CPU usage.
 
-## TIPS
+Its a naive aproach, what it does is just creates more instances when CPU > 90%, and deletes some when the CPU is < 40%, uts just a prototye!
 
-DOMAIN=run.pivotal.io
-curl -k -H "Accept: application/json" https://login.${DOMAIN}/login
+It uses [GoBro](https://github.com/killfill/go-bro) as a lib, to expose itself as a broker in a Cloud Foundry instalation.
 
-curl -k -X POST https://login.${DOMAIN}/oauth/token -H "Accept: application/json" -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=password" -d "password=errr" -d "scope=" -d "username=userrrr"  -H "Authorization: Basic Y2Y6" -i|json
+# How to use
 
-#^---- That could work with Content-Type: application/json too
-#      And with a GET too, sending the params as query strings...
+Clone the repo, push it as an app into Cloud Foundry and:
 
-TOKEN=el_token
+## Enable the service
+```BASH
+$ cf create-service-broker scale us3r passw0rd http://auto-scaler.domain.com
+Creating service broker scale as admin...
+OK
+```
 
-curl -k https://api.${DOMAIN}/v2/organizations -H "Accept: application/json" -H "Authorization: Bearer $TOKEN"
+```BASH
+$ cf service-access
+getting service access as admin...
+broker: scale
+   service       plan   access   orgs
+   auto-scaler   cpu    all
+```
 
+```BASH
+$ cf enable-service-access auto-scaler
+Enabling access to all plans of service auto-scaler for all orgs as admin...
+OK
+```
 
-/v2/apps/48c90b4f-a80e-4961-b59f-eefa7027f44e/summary
-/v2/apps/48c90b4f-a80e-4961-b59f-eefa7027f44e/instances #Muestra estado de las instancias
-/v2/apps/48c90b4f-a80e-4961-b59f-eefa7027f44e/stats #Stats de las instancias mem, cpu! y el estado.. :P
-/v2/apps/:guid/env
-PUT /v2/apps/c1b4b87d-cb2b-4669-af77-2de1cea16118?async=true&inline-relations-depth=1  body:   {"instances":2}
+```BASH
+$ cf m
+Getting services from marketplace in org virtu / space dev as admin...
+OK
+
+service           plans                                         description
+auto-scaler       cpu                                           Auto Scaler Experiment
+```
+
+## Use the service
+
+User can now create a service and bind apps to it to have them auto-scale:
+
+```BASH
+$ cf cs auto-scaler cpu scaler
+Creating service scaler in org virtu / space dev as admin...
+OK
+```
+
+```BASH
+$ cf bs myapp scaler
+Binding service scaler to app myapp in org virtu / space dev as admin...
+OK
+TIP: Use 'cf restage' to ensure your env variable changes take effect
+```
+
+The app will be monitored.
+
+Unbind the service to undo.
+
+```BASH
+$ cf us myapp scaler
+Unbinding app myapp from service scaler in org virtu / space dev as admin...
+OK
+```
+

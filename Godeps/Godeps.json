@@ -1,0 +1,14 @@
+{
+	"ImportPath": "scale-experiment",
+	"GoVersion": "go1.3",
+	"Deps": [
+		{
+			"ImportPath": "go-bro/broker",
+			"Rev": "9afd29f97bd04d6a47527bd4a73958b5a6effb5a"
+		},
+		{
+			"ImportPath": "go-bro/config",
+			"Rev": "9afd29f97bd04d6a47527bd4a73958b5a6effb5a"
+		}
+	]
+}

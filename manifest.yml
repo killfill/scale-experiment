@@ -1,0 +1,7 @@
+applications:
+- name: auto-scaler
+  memory: 10MB
+  env:
+    DOMAIN: virtualizado.cl
+    USER: admin
+    PASS: admin

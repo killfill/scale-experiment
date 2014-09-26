@@ -2,7 +2,7 @@
 
 This is a experiment to build a [Cloud Foundry](http://cloudfoundry.org/) [Service](http://docs.cloudfoundry.org/services/overview.html) that monitor apps, and scale them up or down depending on their CPU usage.
 
-Its a naive aproach, what it does is just creates more instances when CPU > 90%, and deletes some when the CPU is < 40%, uts just a prototye!
+Its a naive aproach, what it does is just creates more instances when CPU > 90%, and deletes some when the CPU is < 40%, its just a prototye!
 
 It uses [GoBro](https://github.com/killfill/go-bro) as a lib, to expose itself as a broker in a Cloud Foundry instalation.
 

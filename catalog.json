@@ -1,0 +1,22 @@
+{
+	"services": [
+		{
+			"id": "b0543a31-e19f-4230-be41-8635617ef255",
+			"name": "auto-scaler",
+			"description": "Auto Scaler Experiment",
+			"bindable": true,
+			"tags": [
+				"auto", "scale"
+			],
+			"requires": [],
+			"plans": [
+				{
+					"id": "4c9496c3-619b-4b80-aea5-b46e8c45602d",
+					"name": "cpu",
+					"description": "Scale the application based on CPU usage",
+					"free": true
+				}
+			]
+		}
+	]
+}

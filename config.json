@@ -1,0 +1,14 @@
+{
+	"username": "us3r",
+	"password": "passw0rd",
+	"services": [
+		{
+			"id": "b0543a31-e19f-4230-be41-8635617ef255",
+			"type": "scaler-experiment"
+		}
+	],
+	"plans": {
+		"4c9496c3-619b-4b80-aea5-b46e8c45602d": {
+		}
+	}
+}
